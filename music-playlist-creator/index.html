@@ -3,23 +3,175 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+
     <title>Music Playlist Explorer</title>
     <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
-    
+
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <header>
         <!-- Your header content here -->
+        <h1 class="orange-text" id="appname">Beatz</h1>
     </header>
 
-    <main> 
+    <br>
+    <main>
         <!-- Your main content here -->
+        <div class="wrapper">
+            <div class="container">
+                <input type="radio" name="slide" id="c1" checked>
+                <label for="c1" class="card">
+                    <div class="row">
+                        <div class="description">
+                            <h4 class="genre-hits">Afrobeats Mix</h4>
+                        </div>
+                    </div>
+                </label>
+
+                <input type="radio" name="slide" id="c2">
+                <label for="c2" class="card">
+                    <div class="row">
+                        <div class="description">
+                            <h4 class="genre-hits">Drill Hits</h4>
+                        </div>
+                    </div>
+                </label>
+
+                <input type="radio" name="slide" id="c3">
+                <label for="c3" class="card">
+                    <div class="row">
+                        <div class="description">
+                            <h4 class="genre-hits">RnB Hits</h4>
+                        </div>
+                    </div>
+                </label>
+
+                <input type="radio" name="slide" id="c4">
+                <label for="c4" class="card">
+                    <div class="row">
+                        <div class="description">
+                            <h4 class="genre-hits">Classical Mix</h4>
+                        </div>
+                    </div>
+                </label>
+            </div>
+        </div>
+        <br>
+
+        <h3 class="orange-text" id="billboard">Billboard Hot 100</h3>
+
+        <!-- Taste Profiles -->
+    <section class="taste-profiles">
+        <div class="song-cards">
+            <div class="songs">
+                <img class="images" src="./assets/img/energy.jpg" alt="Our First Song">
+                <div class="song-info">
+                    <p class="song-text">Album: (Single)</p>
+                    <p class="song-text">Song: Energy (Stay Far Away)</p>
+                    <p class="song-text">Artist: Skepta, Wizkid</p>
+                </div>
+            </div>
+            <div class="songs">
+                <img class="images" src="./assets/img/gasmeup.png" alt="Our Second Song">
+                <div class="song-info">
+                    <p class="song-text">Album: (Single)</p>
+                    <p class="song-text">Song: Gas Me Up (Diligent)</p>
+                    <p class="song-text">Artist: Skepta</p>
+                </div>
+
+            </div>
+            <div class="songs">
+                <img class="images" src="./assets/img/band4band.jpeg" alt="Our Third Song">
+                <div class="song-info">
+                    <p class="song-text">Album: (Single)</p>
+                    <p class="song-text">Song: BAND4BAND (ft. Lil Baby)</p>
+                    <p class="song-text">Artist: Central Cee, Lil Baby</p>
+                </div>
+            </div>
+            <div class="songs">
+                <img class="images" src="./assets/img/syml.jpg" alt="Our Fourth Song">
+                <div class="song-info">
+                    <p class="song-text">Album: (Single)</p>
+                    <p class="song-text">Song: I Wanted to Leave</p>
+                    <p class="song-text">Artist: SYML</p>
+                </div>
+            </div>
+            <div class="songs">
+                <img class="images" src="./assets/img/dont.jpeg" alt="Our Fifth Song">
+                <div class="song-info">
+                    <p class="song-text">Album: TRAPSOUL</p>
+                    <p class="song-text">Song: Don't</p>
+                    <p class="song-text">Artist: Bryson Tiller</p>
+                </div>
+            </div>
+            <div class="songs">
+                <img class="images" src="./assets/img/nowahala.jpeg" alt="Our Sixth Song">
+                <div class="song-info">
+                    <p class="song-text">Album: Original Vibe Machine</p>
+                    <p class="song-text">Song: No Wahala</p>
+                    <p class="song-text">Artist: 1da Banton</p>
+                </div>
+            </div>
+            <div class="songs">
+                <img class="images" src="./assets/img/onmymama.jpeg" alt="Our Seventh Song">
+                <div class="song-info">
+                    <p class="song-text">Album: JAGUAR II</p>
+                    <p class="song-text">Song: On My Mama</p>
+                    <p class="song-text">Artist: Victoria Mon&eacute;t</p>
+                </div>
+            </div>
+            <div class="songs">
+                <img class="images" src="./assets/img/richbabydaddy.jpg" alt="Our Eighth Song">
+                <div class="song-info">
+                    <p class="song-text">Album: For All The Dogs</p>
+                    <p class="song-text">Song: Rich Baby Daddy</p>
+                    <p class="song-text">Artist: Drake, Sexxy Red, SZA</p>
+                </div>
+            </div>
+            <div class="songs">
+                <img class="images" src="./assets/img/sprinter.jpg" alt="Our Nine Song">
+                <div class="song-info">
+                    <p class="song-text">Album: (Single)</p>
+                    <p class="song-text">Song: Sprinter</p>
+                    <p class="song-text">Artist: Dave, Central Cee</p>
+                </div>
+            </div>
+            <div class="songs">
+                <img class="images" src="./assets/img/ngozi.jpg" alt="Our Tenth Song">
+                <div class="song-info">
+                    <p class="song-text">Album: Trench to Triupmh</p>
+                    <p class="song-text">Song: Ngozi</p>
+                    <p class="song-text">Artist: Crayon, Ayra Starr</p>
+                </div>
+            </div>
+            <div class="songs">
+                <img class="images" src="./assets/img/cornfieldchase.jpeg" alt="Our Eleventh Song">
+                <div class="song-info">
+                    <p class="song-text">Album: Interstellar</p>
+                    <p class="song-text">Song: Cornfield Chase</p>
+                    <p class="song-text">Artist: Hans Zimmer</p>
+                </div>
+            </div>
+            <div class="songs">
+                <img class="images" src="./assets/img/notlikeus.jpeg" alt="Our Twelfth Song">
+                <div class="song-info">
+                    <p class="song-text">Album: (Single)</p>
+                    <p class="song-text">Song: Not Like Us</p>
+                    <p class="song-text">Artist: Kendrick Lamar</p>
+                </div>
+            </div>
+        </div>
+    </section>
     </main>
 
     <footer>
         <!-- Your footer content here -->
+        <div class="footer-details">
+            <p class="orange-text">Explore</p>
+            <p class="orange-text">&copy; BEATZ</p>
+            <p class="orange-text">Top Hits</p>
+        </div>
     </footer>
     <script src="data/data.js"></script>
     <script src="script.js"></script>
