@@ -20,6 +20,12 @@ const openModal = (foundPlaylist) => {
     closeButton.addEventListener('click', () => {
         modal.style.display = "none";
     });
+
+    // const shuffleButton = document.getElementById('shuffle');
+    // shuffleButton.addEventListener('click', () => {
+    //     console.log("shuffle button clicked");
+    // });
+
     console.log(foundPlaylist);
     populateModal(foundPlaylist);
     modal.style.display = "flex";
@@ -28,24 +34,24 @@ const openModal = (foundPlaylist) => {
 // PLAN
 // create function to make html elements - done
 // write the code to add event listener to the playlist cards
-// document.querySelectorAll(".playlist-card").forEach((playlistCard) => {
-//     playlistCard.addEventListener('click', (event) => {
-//         console.log("playlist card clicked");
-//         // if (playlistCard.event.target.id.includes("playlist-card")) {
-//         //     pl
-//         //     console.log(foundPlaylist);
-//         //     return foundPlaylist;
-//         // };
-//         // event.target.id playlist-card-0
-//         // extract 0 out of playlist-card-0
-//         event.target.id.split('-') // [playlist, card, 0]
-//         let foundPlaylistID = event.target.id.split('-')[2]
-//         // find the playlist object that matches the id
-//         foundPlaylist = data.playlists.find(playlist => playlist.playlistID == foundPlaylistID)
-//         console.log(foundPlaylist);
-//         openModal(foundPlaylist);
-//     });
-// });
+document.querySelectorAll(".playlist-card").forEach((playlistCard) => {
+    playlistCard.addEventListener('click', (event) => {
+        console.log("playlist card clicked");
+        // if (playlistCard.event.target.id.includes("playlist-card")) {
+        //     pl
+        //     console.log(foundPlaylist);
+        //     return foundPlaylist;
+        // };
+        // event.target.id playlist-card-0
+        // extract 0 out of playlist-card-0
+        event.target.id.split('-') // [playlist, card, 0]
+        let foundPlaylistID = event.target.id.split('-')[2]
+        // find the playlist object that matches the id
+        foundPlaylist = data.playlists.find(playlist => playlist.playlistID == foundPlaylistID)
+        console.log(foundPlaylist);
+        openModal(foundPlaylist);
+    });
+});
 
 window.addEventListener('click', (event) => {
     console.log(event.target);
@@ -63,6 +69,7 @@ window.addEventListener('click', (event) => {
 // Function to populate the modal with intro information
 function populateModal(clickedCard) {
     console.log(clickedCard);
+    let clickedPlaylist = clickedCard.songs;
     // Clear existing song list items
     modalDisplayContainer.innerHTML = '';
     // Create HTML elements for displaying playlist information
@@ -72,7 +79,7 @@ function populateModal(clickedCard) {
     createdPlaylistDisplay.classList.add("playlist-display");
     // console.log(createdPlaylistHtml);
     modalDisplayContainer.appendChild(createdPlaylistDisplay);
-    populatePlaylist(clickedCard);
+    populatePlaylist(clickedPlaylist);
     //populatePlaylist(playlist);
 }
 
@@ -102,7 +109,7 @@ function populatePage(playlists) {
 function populatePlaylist(openedPlaylist) {
     console.log(openedPlaylist);
     playlistSongsContainer.innerHTML = '';
-    let playlistSongs = openedPlaylist.songs;
+    let playlistSongs = openedPlaylist;
     // console.log(songs);
     // console.log(playlistSongs);
 
@@ -199,19 +206,48 @@ document.querySelectorAll(".playlist-card").forEach((playlistCard) => {
 // const likeBtns = document.querySelectorAll(".like-button");
 //
 // Add event listener to like button
-// document.querySelectorAll(".like-button").forEach((likeButton) => {
-//     likeButton.addEventListener("click", (event) => {
-//       // Get the playlist object associated with the clicked like button
-//       const playlistCard = event.target.closest(".playlist-card");
-//       console.log(playlistCard);
-//       const foundPlaylistID = playlistCard.id.split("-")[2];
-//       const foundPlaylist = data.playlists.find(
-//         (playlist) => playlist.playlistID == foundPlaylistID
-//       );
+document.querySelectorAll(".like-button").forEach((likeButton) => {
+    likeButton.addEventListener("click", (event) => {
+        console.log("like button clicked");
+      // Get the playlist object associated with the clicked like button
+      let playlistCard = event.target.closest(".playlist-card");
+      console.log(playlistCard);
+      let foundPlaylistID = playlistCard.id.split("-")[2];
+      console.log("foundplaylistid", foundPlaylistID);
+      let foundPlaylistLikeBtn = data.playlists[foundPlaylistID].likeCount;
+      console.log(foundPlaylistLikeBtn);
 
-//       // Increment like count and update UI
-//       foundPlaylist.likeCount++;
-//       const likeCountElement = playlistCard.querySelector(".like-count");
-//       likeCountElement.textContent = foundPlaylist.likeCount;
-//     });
-//   });
+      // Increment like count and update UI
+      foundPlaylistLikeBtn++;
+      const likeCountElement = playlistCard.querySelector(".like-count");
+      likeCountElement.textContent = foundPlaylistLikeBtn;
+    });
+  });
+
+
+// Function to shuffle a playlist
+function shufflePlaylist(playlist) {
+    const shuffledPlaylist = playlist.slice();
+    for (let i = shuffledPlaylist.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffledPlaylist[i], shuffledPlaylist[j]] = [shuffledPlaylist[j], shuffledPlaylist[i]];
+    }
+    console.log(shuffledPlaylist);
+    return shuffledPlaylist;
+  }
+
+// Add event listener to shuffle button on modal
+const shuffleButton = document.getElementById("shuffle-button");
+shuffleButton.addEventListener("click", () => {
+    // Find the playlist object associated with the currently open modal
+    let playlistCard = modalDisplayContainer.firstElementChild.firstElementChild.id;
+    console.log(playlistCard);
+
+    const selectedPlaylist = data.playlists[playlistCard].songs;
+    console.log(selectedPlaylist);
+
+    // Shuffle the songs array inside the selected playlist object
+    populatePlaylist( shufflePlaylist(selectedPlaylist));
+
+    // Update the list of songs displayed in the modal to reflect the new order
+});
