@@ -28,27 +28,28 @@ const openModal = (foundPlaylist) => {
 // PLAN
 // create function to make html elements - done
 // write the code to add event listener to the playlist cards
-document.querySelectorAll(".playlist-card").forEach((playlistCard) => {
-    playlistCard.addEventListener('click', (event) => {
-        console.log("playlist card clicked");
-        // if (playlistCard.event.target.id.includes("playlist-card")) {
-        //     pl
-        //     console.log(foundPlaylist);
-        //     return foundPlaylist;
-        // };
-        // event.target.id playlist-card-0
-        // extract 0 out of playlist-card-0
-        event.target.id.split('-') // [playlist, card, 0]
-        let foundPlaylistID = event.target.id.split('-')[2]
-        // find the playlist object that matches the id
-        foundPlaylist = data.playlists.find(playlist => playlist.playlistID == foundPlaylistID)
-        console.log(foundPlaylist);
-        openModal(foundPlaylist);
-    });
-});
+// document.querySelectorAll(".playlist-card").forEach((playlistCard) => {
+//     playlistCard.addEventListener('click', (event) => {
+//         console.log("playlist card clicked");
+//         // if (playlistCard.event.target.id.includes("playlist-card")) {
+//         //     pl
+//         //     console.log(foundPlaylist);
+//         //     return foundPlaylist;
+//         // };
+//         // event.target.id playlist-card-0
+//         // extract 0 out of playlist-card-0
+//         event.target.id.split('-') // [playlist, card, 0]
+//         let foundPlaylistID = event.target.id.split('-')[2]
+//         // find the playlist object that matches the id
+//         foundPlaylist = data.playlists.find(playlist => playlist.playlistID == foundPlaylistID)
+//         console.log(foundPlaylist);
+//         openModal(foundPlaylist);
+//     });
+// });
 
 window.addEventListener('click', (event) => {
-    if (event.target === modalContentContainer) {
+    console.log(event.target);
+    if (event.target === document.getElementById("playlist-modal")) {
         modalContentContainer.innerHTML = '';
         modal.style.display = "none";
     }
@@ -197,3 +198,20 @@ document.querySelectorAll(".playlist-card").forEach((playlistCard) => {
 // grab all the cards and put them in a variable
 // const likeBtns = document.querySelectorAll(".like-button");
 //
+// Add event listener to like button
+document.querySelectorAll(".like-button").forEach((likeButton) => {
+    likeButton.addEventListener("click", (event) => {
+      // Get the playlist object associated with the clicked like button
+      const playlistCard = event.target.closest(".playlist-card");
+      console.log(playlistCard);
+      const foundPlaylistID = playlistCard.id.split("-")[2];
+      const foundPlaylist = data.playlists.find(
+        (playlist) => playlist.playlistID == foundPlaylistID
+      );
+
+      // Increment like count and update UI
+      foundPlaylist.likeCount++;
+      const likeCountElement = playlistCard.querySelector(".like-count");
+      likeCountElement.textContent = foundPlaylist.likeCount;
+    });
+  });
