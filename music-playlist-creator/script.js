@@ -199,19 +199,19 @@ document.querySelectorAll(".playlist-card").forEach((playlistCard) => {
 // const likeBtns = document.querySelectorAll(".like-button");
 //
 // Add event listener to like button
-document.querySelectorAll(".like-button").forEach((likeButton) => {
-    likeButton.addEventListener("click", (event) => {
-      // Get the playlist object associated with the clicked like button
-      const playlistCard = event.target.closest(".playlist-card");
-      console.log(playlistCard);
-      const foundPlaylistID = playlistCard.id.split("-")[2];
-      const foundPlaylist = data.playlists.find(
-        (playlist) => playlist.playlistID == foundPlaylistID
-      );
+// document.querySelectorAll(".like-button").forEach((likeButton) => {
+//     likeButton.addEventListener("click", (event) => {
+//       // Get the playlist object associated with the clicked like button
+//       const playlistCard = event.target.closest(".playlist-card");
+//       console.log(playlistCard);
+//       const foundPlaylistID = playlistCard.id.split("-")[2];
+//       const foundPlaylist = data.playlists.find(
+//         (playlist) => playlist.playlistID == foundPlaylistID
+//       );
 
-      // Increment like count and update UI
-      foundPlaylist.likeCount++;
-      const likeCountElement = playlistCard.querySelector(".like-count");
-      likeCountElement.textContent = foundPlaylist.likeCount;
-    });
-  });
+//       // Increment like count and update UI
+//       foundPlaylist.likeCount++;
+//       const likeCountElement = playlistCard.querySelector(".like-count");
+//       likeCountElement.textContent = foundPlaylist.likeCount;
+//     });
+//   });
