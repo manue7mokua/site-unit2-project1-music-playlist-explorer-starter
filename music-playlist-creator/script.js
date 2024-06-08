@@ -12,36 +12,46 @@ let modalDisplayContainer = document.getElementsByClassName("modal-display")[0];
 console.log(playlistCardsContainer);
 
 // Opening the modal on click
-const openModal = (clicked) => {
-    modalContentContainer.innerHTML = '';
+const openModal = (foundPlaylist) => {
     //console.log(clicked);
     //const = clickedCard(playlistCardsContainer)
-    populateModal(clickedCard(playlistCardsContainer));
+    const closeButton = document.getElementById('close');
+    // closeButton.textContent = 'X';
+    closeButton.addEventListener('click', () => {
+        modal.style.display = "none";
+    });
+    console.log(foundPlaylist);
+    populateModal(foundPlaylist);
     modal.style.display = "flex";
 };
-
-const clickedCard = (playlistCardsContainer) => {
-    // playlistCards is expected to be an HTML collection
-    console.log(playlistCardsContainer.length);
-    // we want to find the clicked playlist
-    let foundPlaylist;
-    for (let i = 0; i < playlistCardsContainer.length; i++) {
-        if (playlistCard[i].event.target.id.includes("playlist-card")) {
-                    foundPlaylist = document.getElementById(card.id);
-                    console.log(foundPlaylist);
-        };
-    }
-    return foundPlaylist;
-    // what are we returning here?
-}
 
 // PLAN
 // create function to make html elements - done
 // write the code to add event listener to the playlist cards
-document.querySelectorAll(".playlist-cards").forEach((playlistCard) => {
+document.querySelectorAll(".playlist-card").forEach((playlistCard) => {
     playlistCard.addEventListener('click', (event) => {
-        openModal(clickedCard());
+        console.log("playlist card clicked");
+        // if (playlistCard.event.target.id.includes("playlist-card")) {
+        //     pl
+        //     console.log(foundPlaylist);
+        //     return foundPlaylist;
+        // };
+        // event.target.id playlist-card-0
+        // extract 0 out of playlist-card-0
+        event.target.id.split('-') // [playlist, card, 0]
+        let foundPlaylistID = event.target.id.split('-')[2]
+        // find the playlist object that matches the id
+        foundPlaylist = data.playlists.find(playlist => playlist.playlistID == foundPlaylistID)
+        console.log(foundPlaylist);
+        openModal(foundPlaylist);
     });
+});
+
+window.addEventListener('click', (event) => {
+    if (event.target === modalContentContainer) {
+        modalContentContainer.innerHTML = '';
+        modal.style.display = "none";
+    }
 });
 // in the callback of the event listener, look at event.target.id to match playlist-card
 // in the callback function:
@@ -53,7 +63,7 @@ document.querySelectorAll(".playlist-cards").forEach((playlistCard) => {
 function populateModal(clickedCard) {
     console.log(clickedCard);
     // Clear existing song list items
-    modalContentContainer.innerHTML = '';
+    modalDisplayContainer.innerHTML = '';
     // Create HTML elements for displaying playlist information
     let createdPlaylistDisplay = document.createElement("div");
     createdPlaylistDisplay.innerHTML = createModalHeader(clickedCard);
@@ -61,6 +71,7 @@ function populateModal(clickedCard) {
     createdPlaylistDisplay.classList.add("playlist-display");
     // console.log(createdPlaylistHtml);
     modalDisplayContainer.appendChild(createdPlaylistDisplay);
+    populatePlaylist(clickedCard);
     //populatePlaylist(playlist);
 }
 
@@ -75,7 +86,11 @@ function populatePage(playlists) {
 
         // Set a unique ID using idx and a prefix
         createdPlaylistHtml.id = `playlist-card-${idx}`;
-        createdPlaylistHtml.onclick
+        // createdPlaylistHtml.onclick = () => {
+        //     // openModal(createdPlaylistHtml.id);
+        //     openModal(playlist);
+        // }
+
         // console.log(createdPlaylistHtml);
         playlistCardsContainer.appendChild(createdPlaylistHtml);
     });
@@ -83,9 +98,10 @@ function populatePage(playlists) {
 
 
 // Populating the Playlist with Songs
-function populatePlaylist(relevantData) {
-    // console.log(data);
-    let playlistSongs = relevantData.songs;
+function populatePlaylist(openedPlaylist) {
+    console.log(openedPlaylist);
+    playlistSongsContainer.innerHTML = '';
+    let playlistSongs = openedPlaylist.songs;
     // console.log(songs);
     // console.log(playlistSongs);
 
@@ -106,7 +122,7 @@ function populatePlaylist(relevantData) {
 
 function createPlaylistCardHtml(playlist) {
     return `
-            <img class="playlist-images" src=${playlist.playlist_art} alt="Our Sixth Song">
+            <img class="playlist-images" src=${playlist.playlist_art} alt="Our Sixth Song" my-data="${playlist.playlistID}">
             <div class="playlist-info orange-text">
                 <p class="playlist-title orange-text">Album: ${playlist.playlist_name}</p>
                 <p class="playlist-artist orange-text">Created By: ${playlist.playlist_creator}</p>
@@ -126,30 +142,27 @@ function createSongCardHtml(song) {
                 <p class="song-title orange-text">Title: ${song.title}</p>
                 <p class="song-artist orange-text">Created By: ${song.artist}</p>
                 <p class="song-album orange-text">Album: ${song.album}</p>
-                <span><p class="like-button">&hearts;</p></span>
-                <span><p class="song-duration orange-text">songTime: ${song.duration}</p></span>
+                <span><p class="song-duration orange-text">${song.duration}</p></span>
             </div>
             `;
 }
 
-function createModalHeader(playlist) {
+function createModalHeader(foundPlaylist) {
     // Add a close button to the modal
-    console.log(playlist);
-    const closeButton = document.createElement('button');
-    closeButton.textContent = '&times;';
-    closeButton.addEventListener('click', () => {
-        modalContent.innerHTML = '';
-        modal.style.display = "none";
-    });
-    modalContent.appendChild(closeButton);
+    console.log(foundPlaylist);
+    // const closeButton = document.createElement('button');
+    // const closeButton = document.getElementById('close');
+    // // closeButton.textContent = 'X';
+    // closeButton.addEventListener('click', () => {
+    //     modal.style.display = "none";
+    // });
 
     return `
-            <img class="modal-playlist-image" src=${playlist.playlist_art} alt="Our Sixth Song">
-            <div class="modal-playlist-info orange-text">
-                <p class="modal-playlist-title orange-text">Album: ${playlist.playlist_name}</p>
-                <p class="modal-playlist-artist orange-text">Created By: ${playlist.playlist_creator}</p>
-                <span><i class="fa-regular fa-heart"></i></span>
-                <span><p class="like-count orange-text">${playlist.likeCount}</p></span>
+            <img class="modal-playlist-image" id="${foundPlaylist.playlistID}" src=${foundPlaylist.playlist_art} alt="Our Sixth Song">
+            <div class="modal-playlist-info orange-text" my-data="${foundPlaylist.playlistID}">
+                <p class="modal-playlist-title orange-text" my-data="${foundPlaylist.playlistID}">Album: ${foundPlaylist.playlist_name}</p>
+                <p class="modal-playlist-artist orange-text" my-data="${foundPlaylist.playlistID}">Created By: ${foundPlaylist.playlist_creator}</p>
+                <p class="like-count orange-text">Like Count: ${foundPlaylist.likeCount}</p>
             </div>
             `;
 }
@@ -157,4 +170,30 @@ function createModalHeader(playlist) {
 
 // Function calls
 populatePage(playlists);
-openModal(playlistCardsContainer);
+
+document.querySelectorAll(".playlist-card").forEach((playlistCard) => {
+    console.log(playlistCard);
+    playlistCard.addEventListener('click', (event) => {
+        console.log("playlist card clicked");
+        // if (playlistCard.event.target.id.includes("playlist-card")) {
+        //     pl
+        //     console.log(foundPlaylist);
+        //     return foundPlaylist;
+        // };
+        // event.target.id playlist-card-0
+        // extract 0 out of playlist-card-0
+        // event.target.id.split('-') // [playlist, card, 0]
+        // let foundPlaylistID = event.target.id.split('-')[2]
+        console.log(event.target)
+        let foundPlaylistID = event.target.getAttribute("my-data") // id of the playlist
+        console.log("foundplaylistid", foundPlaylistID);
+        // // find the playlist object that matches the id
+        let foundPlaylist = data.playlists.find(playlist => playlist.playlistID == foundPlaylistID)
+        // console.log(foundPlaylist);
+        openModal(foundPlaylist);
+    });
+});
+// Like Btn
+// grab all the cards and put them in a variable
+// const likeBtns = document.querySelectorAll(".like-button");
+//
